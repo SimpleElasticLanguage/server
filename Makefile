@@ -3,10 +3,10 @@ export BUILD_TAG := $(USER)
 
 
 docker:			Dockerfile
-	docker build -f Dockerfile --network host -t "$(PROJECT):$(BUILD_TAG)" .
+	docker build -t "$(PROJECT):$(BUILD_TAG)" .
 
 docker-test:	docker Dockerfile.test
-	docker build -f Dockerfile.test --build-arg BUILD_TAG=$(BUILD_TAG) --network host -t "$(PROJECT)_test:$(BUILD_TAG)" .
+	docker build -f Dockerfile.test --build-arg BUILD_TAG=$(BUILD_TAG) -t "$(PROJECT)_test:$(BUILD_TAG)" .
 
 lint:			docker-test
 	scripts/pylint.sh "$(PROJECT)_test:$(BUILD_TAG)" sel_server
