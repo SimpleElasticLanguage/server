@@ -21,5 +21,13 @@ upshell:		docker-test
 	docker-compose -f tests/docker-compose.yml -f docker-compose.add_volumes.yml exec tests bash
 	docker-compose -f tests/docker-compose.yml down
 
+doc:
+	@echo "Getting latest documentation json ..."
+	$(eval DID=$(shell docker run -p 9001:9000 -d sel_server:$(USER)))
+	@sleep 2
+	curl "http://localhost:9001/openapi.json" > openapi.json
+	@docker stop $(DID)
+
+
 clean:
 	rm -rf sel_server/__pycache__ scripts/__pycache__

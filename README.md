@@ -64,7 +64,7 @@ make docker
 docker-compose up -d
 ```
 
-Don't forget to stop the server after usage
+Don't forget to stop the server after use
 ```
 docker-compose down
 ```
@@ -72,18 +72,9 @@ docker-compose down
   
 ## Makefile rules  
   
-### docker
-Build SEL Server docker
-
-### docker-test
-Build a SEL Server docker for test purpose
-
-### lint
-Lint the code
-
-### tests
-Run all tests
-
-### upshell
-Up a shell into a docker the project.  
-Useful to run only one or few tests.
+ - **docker** - Build SEL Server docker
+ - **docker-test** - Build a SEL Server docker for tests
+ - **lint** - Lint the code
+ - **tests** - Run all tests
+ - **upshell** - Up a shell into a docker, useful to run only few tests
+ - **doc** - Get latest documentation json
