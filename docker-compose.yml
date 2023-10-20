@@ -2,7 +2,7 @@ version: '2.4'
 services:
 
   server:
-    image: sel_server:${BUILD_TAG}
+    image: sel_server:${USER}
     environment:
       - "ES_HOST=http://elasticsearch"
     depends_on:
