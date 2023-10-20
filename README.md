@@ -1,8 +1,8 @@
-# SEL
-For Simple Elastic Language offer an easy way to query ElasticSearch for every body even no-tech people and even on a big, complex and nested schema.  
+# SEL Server
+Simple Elastic Language offer an easy way to query ElasticSearch for every body even no-tech people and even on a big, complex and nested schema.  
   
-The project is split into two subprojects:  
-- SEL, which is the library  
+The project is split into two sub projects:  
+- [SEL](https://github.com/SimpleElasticLanguage/sel), which is the library  
 - SEL Server, unlock quick usage by connecting directly to ES.  
 
 
@@ -12,7 +12,7 @@ Two first digits of SEL version match Elasticsearch version and then it's the in
 
 ## Full documentation
 [SEL doc](https://simpleelasticlanguage.github.io/sel)  
-[SEL Server doc](http://localhost:9000/docs) (need `make start-server`)  
+[SEL Server doc](https://simpleelasticlanguage.github.io/server/)  
 
 
 ## Compagny
@@ -22,37 +22,8 @@ SEL was initially developed for Heuritech in 2016 and used by everybody inside t
 ## Quickstart
 SEL is using index schema to generate queries.  
 Be aware it will request ES schema at any query generation.  
+See [SEL](https://github.com/SimpleElasticLanguage/sel) repository for library usage.  
 
-
-### SEL as ES interface
-```
-from elasticsearch import Elasticsearch
-from sel.sel import SEL
-
-es = Elasticsearch(hosts="http://elasticsearch")
-sel = SEL(es)
-sel.search("my_index", "label = bag")
-```
-
-### SEL as ES query generator
-```
-from elasticsearch import Elasticsearch
-from sel.sel import SEL
-
-es = Elasticsearch(hosts="http://elasticsearch")
-sel = SEL(es)
-sel.generate_query("label = bag", index="my_index")["elastic_query"]
-```
-
-### SEL as offline ES query generator
-```
-from sel.sel import SEL
-
-sel = SEL(None)
-sel.generate_query("label = bag", schema=my_index_schema)["elastic_query"]
-```
-
-### SEL as API (SEL Server)
 ```
 curl -X POST -H "Content-Type: application/json" -d '{"query": "label = bag"}' http://localhost:9000/search/my_index
 curl -X POST -H "Content-Type: application/json" -d '{"query": {"field": "label", "value": "bag"}}' http://localhost:9000/search/my_index
@@ -73,7 +44,7 @@ docker-compose down
 ## Makefile rules  
   
  - **docker** - Build SEL Server docker
- - **docker-test** - Build a SEL Server docker for tests
+ - **docker-test** - Build SEL Server test docker
  - **lint** - Lint the code
  - **tests** - Run all tests
  - **upshell** - Up a shell into a docker, useful to run only few tests
