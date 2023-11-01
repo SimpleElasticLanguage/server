@@ -3,7 +3,7 @@ Simple Elastic Language offer an easy way to query ElasticSearch for every body 
   
 The project is split into two sub projects:  
 - [SEL](https://github.com/SimpleElasticLanguage/sel), which is the library  
-- SEL Server, unlock quick usage by connecting directly to ES.  
+- [SEL Server](https://github.com/SimpleElasticLanguage/sel_server), unlock quick usage by connecting directly to ES.  
 
 
 ## Versions
