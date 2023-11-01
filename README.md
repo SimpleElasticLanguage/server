@@ -30,6 +30,8 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": {"field": "label"
 ```
 
 #### Run the server
+First [install docker](https://docs.docker.com/get-docker/)  
+  
 ```
 make docker
 docker-compose up -d
@@ -49,3 +51,4 @@ docker-compose down
  - **tests** - Run all tests
  - **upshell** - Up a shell into a docker, useful to run only few tests
  - **doc** - Get latest documentation json
+ - **clean** - Clean all `__pycache__`
