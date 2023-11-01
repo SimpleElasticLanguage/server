@@ -80,4 +80,4 @@ def elastic_connect():
 
 if __name__ == "__main__":
     args = options()
-    main(args.filepath, args.index_name, args.schema_filepath, overwrite=args.overwrite)
+    create_index(args.filepath, args.schema_filepath, args.index_name, overwrite=args.overwrite)
