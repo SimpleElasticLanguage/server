@@ -1,0 +1,26 @@
+name: documentation
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Swagger
+        run: |
+          wget https://github.com/swagger-api/swagger-ui/archive/refs/tags/v5.9.1.tar.gz
+          tar -xf v5.9.1.tar.gz swagger-ui-5.9.1/dist
+          mv swagger-ui-5.9.1/dist docs/dist
+          rm -r swagger-ui-5.9.1 v5.9.1.tar.gz
+          sed -i 's#"https://petstore.swagger.io/v2/swagger.json"#"sel_server.json"#g' docs/dist/swagger-initializer.js
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
