@@ -2,7 +2,7 @@ version: '2.4'
 services:
 
   server:
-    image: ghcr.io/simpleelasticlanguage/server:v2.4.1
+    image: ghcr.io/simpleelasticlanguage/server:v2.4.2
     environment:
       - "ES_HOST=http://elasticsearch"
     depends_on:
