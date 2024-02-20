@@ -3,9 +3,8 @@ import logging
 from elasticsearch import Elasticsearch
 from elasticsearch.client import _normalize_hosts
 
-from . import config
-
 from sel.sel import SEL
+from . import config
 
 
 def elastic_connect():

@@ -1,9 +1,8 @@
 import logging
-from fastapi import FastAPI, status
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.docs import get_swagger_ui_html
 
-from sel import utils
 from . import starter, response_models, body_models, exceptions
 
 
@@ -11,7 +10,7 @@ app = FastAPI(
     title="SEL Server",
     description="Simple Elastic Language Server, make ElasticSearch query easier",
     swagger="2.0",
-    version="2.4.1",
+    version="5.5.1",
     root_path=None,
     docs_url=None,
     redoc_url=None,
@@ -91,7 +90,7 @@ def delete_documents(index: str, query: body_models.DeleteQuery):
     response_model=response_models.ReallyDeleteDocuments
 )
 @exceptions.rewriter
-def UNSAFE_really_delete_documents(index: str, query: body_models.ReallyDeleteQuery):
+def unsafe_really_delete_documents(index: str, query: body_models.ReallyDeleteQuery):
     sel = starter.get_api()
     count = sel.really_delete_documents(index, query.__dict__)
     return {"count": count}
@@ -140,8 +139,8 @@ def schema_subfield(index, subfields: body_models.Subfields):
 def generator(query: body_models.QueryGenerator, index: str = None):
     sel = starter.get_api()
     query = query.__dict__
-    schema = query.pop("index_schema", None)
-    return sel.generate_query(query, schema=schema, index=index)
+    index_schema = query.pop("index_schema", None)
+    return sel.generate_query(query, schema=index_schema, index=index)
 
 
 @app.get("/docs", include_in_schema=False)

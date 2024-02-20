@@ -7,7 +7,7 @@ The project is split into two sub projects:
 
 
 ## Versions
-Two first digits of SEL version match Elasticsearch version and then it's the inner SEL version, eg 2.4.1 works with ES 2.4, v1 of SEL for this version of ES
+Two first digits of SEL version match Elasticsearch version and then it's the inner SEL version, eg 5.5.1 works with ES 5.5, v1 of SEL for this version of ES
 
 
 ## Full documentation
@@ -33,7 +33,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": {"field": "label"
 
 #### Docker image
 ```
-ghcr.io/simpleelasticlanguage/server:v2.4.1
+ghcr.io/simpleelasticlanguage/server:v5.5.1
 ```
 
 #### Run the server

@@ -2,7 +2,7 @@ version: '2.4'
 services:
 
   server:
-    image: ghcr.io/simpleelasticlanguage/server:v2.4.2
+    image: ghcr.io/simpleelasticlanguage/server:v5.5.1
     environment:
       - "ES_HOST=http://elasticsearch"
     depends_on:
@@ -12,10 +12,8 @@ services:
       - "9000:9000"
 
   elasticsearch:
-    image: elasticsearch:2.4
-    command: elasticsearch -Des.nodes.discovery=false
-    environment:
-      - "ES_HEAP_SIZE=8G"
+    image: elasticsearch:5.5
+    command: elasticsearch
     volumes:
       - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
     ports:

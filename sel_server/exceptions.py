@@ -1,7 +1,8 @@
-from fastapi import FastAPI, HTTPException
+import functools
+
+from fastapi import HTTPException
 from sel.utils import InternalServerError, InvalidClientInput, NotFound
 from sel.schema_reader import SchemaError
-import functools
 
 
 def rewriter(route_handler):
@@ -28,5 +29,5 @@ def to_httpexception(exc):
         return HTTPException(status_code=404, detail=exc.message)
     elif isinstance(exc, SchemaError):
         return HTTPException(status_code=400, detail=exc.message)
-    else:
-        return HTTPException(status_code=500, detail=str(exc))
+
+    return HTTPException(status_code=500, detail=str(exc))

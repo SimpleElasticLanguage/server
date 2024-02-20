@@ -1,7 +1,7 @@
 """
 Response models definitions
 """
-from typing import List, Union
+from typing import List
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel
