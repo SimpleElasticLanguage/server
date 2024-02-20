@@ -5,7 +5,7 @@ services:
     image: sel_server_test:${BUILD_TAG}
     environment:
       - "LOGLEVEL=DEBUG"
-      - "ES_HOST=http://elasticsearch"
+      - "ES_HOSTS=http://elasticsearch"
     depends_on:
       elasticsearch:
         condition: service_healthy

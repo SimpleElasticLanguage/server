@@ -3,6 +3,7 @@ TestRoutes is only made to tests routes, it not check api returns
 """
 import pytest
 import json
+import os
 
 from scripts import elastic
 
@@ -10,13 +11,15 @@ from scripts import elastic
 TEST_INDEX_FILE = "/tests/data/sample_2017.json"
 TEST_SCHEMA_FILE = "/scripts/schema.json"
 TEST_INDEX = "test_index"
-
+ES_HOSTS = os.environ["ES_HOSTS"].split(",")
 
 class TestRoutes:
 
     @pytest.fixture(scope="function", autouse=True)
     def init(self):
-        elastic.create_index(TEST_INDEX_FILE, TEST_SCHEMA_FILE, TEST_INDEX, overwrite=True)
+        elastic.create_index(
+            TEST_INDEX_FILE, TEST_SCHEMA_FILE, TEST_INDEX, hosts=ES_HOSTS, overwrite=True
+        )
 
 
     def test_hello(self, api):
@@ -91,5 +94,9 @@ class TestRoutes:
 
     def test_generator(self, api):
         data = {"query": {"field": ".id", "value": "toto"}}
+        res = api.post(f"/generator/{TEST_INDEX}", json=data)
+        assert res.json()['elastic_query']['query']['bool']['must'] == [{'term': {'id': 'toto'}}], res.text
+
+        data = {"query": ".id = toto"}
         res = api.post(f"/generator/{TEST_INDEX}", json=data)
         assert res.json()['elastic_query']['query']['bool']['must'] == [{'term': {'id': 'toto'}}], res.text

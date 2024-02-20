@@ -4,7 +4,7 @@ services:
   server:
     image: ghcr.io/simpleelasticlanguage/server:v5.5.1
     environment:
-      - "ES_HOST=http://elasticsearch"
+      - "ES_HOSTS=http://elasticsearch"
     depends_on:
       elasticsearch:
         condition: service_healthy
@@ -23,4 +23,3 @@ services:
       interval: 30s
       timeout: 10s
       retries: 50
-

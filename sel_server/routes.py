@@ -40,7 +40,7 @@ def hello():
 @exceptions.rewriter
 def scroll(index: str, query: body_models.Scroll = None):
     sel = starter.get_api()
-    query = query.__dict__ if query else None
+    query = {k: v for k, v in query.__dict__.items() if v is not None} if query else None
     return sel.scroll(index, query, query.pop("cash_time"), scroll_id=query.pop("scroll_id", None))
 
 
@@ -56,7 +56,7 @@ def clear_scroll(scroll_id: str):
 @exceptions.rewriter
 def download_aggreg(index: str, query: body_models.DownloadAggreg):
     sel = starter.get_api()
-    query = query.__dict__
+    query = {k: v for k, v in query.__dict__.items() if v is not None}
     base_aggreg = query.pop("base_aggregation")
     lines = sel.download_aggreg(index, base_aggreg, query)
     return {"buckets": list(lines)}
@@ -66,7 +66,7 @@ def download_aggreg(index: str, query: body_models.DownloadAggreg):
 @exceptions.rewriter
 def search(index: str, query: body_models.Query = None):
     sel = starter.get_api()
-    return sel.search(index, query.__dict__ if query else None)
+    return sel.search(index, {k: v for k, v in query.__dict__.items() if v is not None} if query else None)
 
 
 @app.get('/document/{index}/{doc_id}', response_model=response_models.GetOneDocument)
@@ -80,7 +80,7 @@ def get_one_document(index: str, doc_id: str):
 @exceptions.rewriter
 def delete_documents(index: str, query: body_models.DeleteQuery):
     sel = starter.get_api()
-    query = query.__dict__
+    query = {k: v for k, v in query.__dict__.items() if v is not None}
     undelete = query.pop("undelete", False)
     return sel.delete_documents(index, query, undelete=undelete)
 
@@ -92,7 +92,7 @@ def delete_documents(index: str, query: body_models.DeleteQuery):
 @exceptions.rewriter
 def unsafe_really_delete_documents(index: str, query: body_models.ReallyDeleteQuery):
     sel = starter.get_api()
-    count = sel.really_delete_documents(index, query.__dict__)
+    count = sel.really_delete_documents(index, {k: v for k, v in query.__dict__.items() if v is not None})
     return {"count": count}
 
 
@@ -138,7 +138,7 @@ def schema_subfield(index, subfields: body_models.Subfields):
 @exceptions.rewriter
 def generator(query: body_models.QueryGenerator, index: str = None):
     sel = starter.get_api()
-    query = query.__dict__
+    query = {k: v for k, v in query.__dict__.items() if v is not None}
     index_schema = query.pop("index_schema", None)
     return sel.generate_query(query, schema=index_schema, index=index)
 

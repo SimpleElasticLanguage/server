@@ -44,6 +44,11 @@ docker-compose up -d
 ```
 Go to: [http://localhost:9000](http://localhost:9000)  
   
+First time you need to insert some data
+```
+./scripts/elastic.py tests/data/sample_2017.json scripts/schema.json test_index
+```
+  
 Don't forget to stop the server after use  
 ```
 docker-compose down

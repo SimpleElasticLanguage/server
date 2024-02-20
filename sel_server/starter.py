@@ -9,7 +9,7 @@ from . import config
 
 def elastic_connect():
     """ Create new elastic connection """
-    es_hosts = os.environ["ES_HOST"].split(",")
+    es_hosts = os.environ["ES_HOSTS"].split(",")
     kwargs = {
         "hosts": _normalize_hosts(es_hosts),
         "retry_on_timeout": True,
@@ -33,7 +33,7 @@ def get_api():
         CONNECTION = elastic_connect()
 
     log_level = logging.INFO
-    if os.environ.get("LOGLEVEL").upper() == "DEBUG":
+    if os.environ.get("LOGLEVEL", "").upper() == "DEBUG":
         log_level = logging.DEBUG
 
     return SEL(CONNECTION, conf=CONF, log_level=log_level)
