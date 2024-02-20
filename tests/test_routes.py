@@ -13,6 +13,7 @@ TEST_SCHEMA_FILE = "/scripts/schema.json"
 TEST_INDEX = "test_index"
 ES_HOSTS = os.environ["ES_HOSTS"].split(",")
 
+
 class TestRoutes:
 
     @pytest.fixture(scope="function", autouse=True)

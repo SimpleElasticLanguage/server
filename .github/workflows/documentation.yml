@@ -12,7 +12,7 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Swagger
         run: |
           wget https://github.com/swagger-api/swagger-ui/archive/refs/tags/v5.9.1.tar.gz
