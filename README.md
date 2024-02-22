@@ -7,7 +7,7 @@ The project is split into two sub projects:
 
 
 ## Versions
-Two first digits of SEL version match Elasticsearch version and then it's the inner SEL version, eg 5.5.1 works with ES 5.5, v1 of SEL for this version of ES
+Two first digits of SEL version match Elasticsearch version and then it's the inner SEL version, eg 6.8.1 works with ES 6.8, v1 of SEL for this version of ES
 
 
 ## Full documentation
@@ -33,7 +33,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": {"field": "label"
 
 #### Docker image
 ```
-ghcr.io/simpleelasticlanguage/server:v5.5.1
+ghcr.io/simpleelasticlanguage/server:v6.8.1
 ```
 
 #### Run the server
@@ -63,3 +63,15 @@ docker-compose down
  - **upshell** - Up a shell into a docker, useful to run only few tests
  - **doc** - Get latest documentation json
  - **clean** - Clean all `__pycache__`
+
+
+## Known issue
+
+```
+[1]: max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+```
+
+Execute the following command
+```
+sysctl -w vm.max_map_count=262144
+```

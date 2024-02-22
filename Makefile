@@ -21,7 +21,7 @@ upshell:		docker-test
 	docker-compose -f tests/docker-compose.yml -f tests/docker-compose.add_volumes.yml exec tests bash
 	docker-compose -f tests/docker-compose.yml down
 
-doc:
+doc:	docker
 	@echo "Getting latest documentation json ..."
 	$(eval DID=$(shell docker run -p 9001:9000 -d sel_server:$(USER)))
 	@sleep 2
