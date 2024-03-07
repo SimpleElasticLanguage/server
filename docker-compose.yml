@@ -15,7 +15,8 @@ services:
     image: elasticsearch:6.8.0
     command: elasticsearch
     volumes:
-      - /var/lib/elasticsearch/data:/var/lib/elasticsearch/data
+      - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
+      # - $PWD/jvm.options:/etc/elasticsearch/jvm.options:ro
     ports:
       - "9200:9200"
     healthcheck:
