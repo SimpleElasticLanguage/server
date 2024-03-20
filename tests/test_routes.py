@@ -9,9 +9,10 @@ from scripts import elastic
 
 
 TEST_INDEX_FILE = "/tests/data/sample_2017.json"
-TEST_SCHEMA_FILE = "/scripts/schema.json"
+TEST_SCHEMA_FILE = "/tests/data/sample_2017_schema.json"
 TEST_INDEX = "test_index"
 ES_HOSTS = os.environ["ES_HOSTS"].split(",")
+ES_AUTH = os.environ["ES_AUTH"]
 
 
 class TestRoutes:
@@ -19,7 +20,8 @@ class TestRoutes:
     @pytest.fixture(scope="function", autouse=True)
     def init(self):
         elastic.create_index(
-            TEST_INDEX_FILE, TEST_SCHEMA_FILE, TEST_INDEX, hosts=ES_HOSTS, overwrite=True
+            TEST_INDEX_FILE, TEST_SCHEMA_FILE, TEST_INDEX, hosts=ES_HOSTS, http_auth=ES_AUTH,
+            overwrite=True
         )
 
 
@@ -57,13 +59,13 @@ class TestRoutes:
 
     def test_delete_documents(self, api):
         query = {"ids": ["1434484792463866663"]}
-        res = api.delete(f"/delete-documents/{TEST_INDEX}", json=query)
+        res = api.post(f"/delete-documents/{TEST_INDEX}", json=query)
         assert res.json()["count"] == 1, res.text
 
 
     def test_unsafe_really_delete_documents(self, api):
         query = {"ids": ["1434484792463866663"]}
-        res = api.delete(f"/unsafe/really-delete-documents/{TEST_INDEX}", json=query)
+        res = api.post(f"/unsafe/really-delete-documents/{TEST_INDEX}", json=query)
         assert res.json()["count"] == 1, res.text
 
 

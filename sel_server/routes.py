@@ -10,7 +10,7 @@ app = FastAPI(
     title="SEL Server",
     description="Simple Elastic Language Server, make ElasticSearch query easier",
     swagger="2.0",
-    version="6.8.1",
+    version="7.17.1",
     root_path=None,
     docs_url=None,
     redoc_url=None,
@@ -77,6 +77,7 @@ def get_one_document(index: str, doc_id: str):
 
 
 @app.delete('/delete-documents/{index}', response_model=response_models.DeleteDocuments)
+@app.post('/delete-documents/{index}', response_model=response_models.DeleteDocuments)
 @exceptions.rewriter
 def delete_documents(index: str, query: body_models.DeleteQuery):
     sel = starter.get_api()
@@ -86,6 +87,10 @@ def delete_documents(index: str, query: body_models.DeleteQuery):
 
 
 @app.delete(
+    '/unsafe/really-delete-documents/{index}',
+    response_model=response_models.ReallyDeleteDocuments
+)
+@app.post(
     '/unsafe/really-delete-documents/{index}',
     response_model=response_models.ReallyDeleteDocuments
 )

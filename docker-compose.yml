@@ -2,9 +2,10 @@ version: '2.4'
 services:
 
   server:
-    image: ghcr.io/simpleelasticlanguage/server:v6.8.1
+    image: ghcr.io/simpleelasticlanguage/server:v7.17.1
     environment:
       - "ES_HOSTS=http://elasticsearch"
+      - "ES_AUTH=sel:onlyfortests"
     depends_on:
       elasticsearch:
         condition: service_healthy
@@ -12,11 +13,13 @@ services:
       - "9000:9000"
 
   elasticsearch:
-    image: elasticsearch:6.8.0
+    image: elasticsearch:7.17.18
     command: elasticsearch
     volumes:
       - /usr/share/elasticsearch/data:/usr/share/elasticsearch/data
-      # - $PWD/jvm.options:/etc/elasticsearch/jvm.options:ro
+      - $PWD/tests/config:/config:rw
+    environment:
+      - ES_PATH_CONF=/config
     ports:
       - "9200:9200"
     healthcheck:
