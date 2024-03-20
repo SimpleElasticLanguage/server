@@ -78,7 +78,7 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": "category = perso
 ```
 
 
-#### Environment variables
+## Environment variables
 
  - **ES_HOSTS** - Comma separated url of your cluster, such "http://elasticsearch:9200"
  - **ES_CLOUD_ID** - Alternative way of connecting to your cluster such: "cluster-1:dXMa5Fx..."
