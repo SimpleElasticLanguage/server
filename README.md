@@ -1,5 +1,5 @@
 # SEL Server
-Simple Elastic Language offer an easy way to query ElasticSearch for everybody even no-tech people and even on a big, complex and nested schema.  
+Simple Elastic Language provides a query language to quickly explore and analyze complex datasets of images on Elasticsearch.  
   
 The project is split into two sub projects:  
 - [SEL](https://github.com/SimpleElasticLanguage/sel), which is the library  
@@ -16,7 +16,7 @@ Two first digits of SEL version match Elasticsearch version and then it's the in
 
 
 ## Compagny
-SEL was initially developed for Heuritech in 2016 and used by everybody inside the compagny tech and no-tech people since that time to explore internal data, generate reports and analysis.
+SEL was initially developed for Heuritech in 2016 and used by everybody inside the compagny since that time, to explore, analyse and make reports on their own dataset of images.  
 
 
 ## Quickstart
@@ -36,19 +36,19 @@ curl -X POST -H "Content-Type: application/json" -d '{"query": {"field": "catego
 ghcr.io/simpleelasticlanguage/server:v7.17.1
 ```
 
-#### Dataset MS COCO 2017
+#### Dataset MS COCO 2017 Colorized
 You need to get a dataset to test the service.
 
-This dataset has been generated from the official MS COCO 2017, without the person keypoints, using the convertor.py
+This dataset has been generated from the official MS COCO 2017, without the person keypoints, using the convertor.py, and colors has been added by kmeans.py  
 ```
 git clone https://github.com/SimpleElasticLanguage/datasets.git
-cp datasets/datasets/ms_coco_2017/ms_coco_2017_head_100.ndjson .
+cp datasets/datasets/ms_coco_2017/ms_coco_2017_colorized_head_10k.ndjson .
 cp datasets/datasets/ms_coco_2017/schemas/schema_es_7.json .
 ```
   
-or, for fetching the full dataset:  
+or, to fetching the full dataset (123k images):  
 ```
-wget http://simpleelasticlanguage.com/datasets/ms_coco_2017/ms_coco_2017.ndjson
+wget http://simpleelasticlanguage.com/datasets/ms_coco_2017/ms_coco_2017_colorized.ndjson
 wget http://simpleelasticlanguage.com/datasets/ms_coco_2017/schemas/schema_es_7.json
 ```
 
@@ -62,12 +62,12 @@ Go to: [localhost:9000](http://localhost:9000)
   
 First time you need to insert some data.  
 ```
-./scripts/elastic.py ms_coco_2017_head_100.ndjson schema_es_7.json ms_coco_2017 --http-auth sel:onlyfortests -v
+./scripts/elastic.py ms_coco_2017_colorized_head_10k.ndjson schema_es_7.json ms_coco_2017 --http-auth sel:onlyfortests -v
 ```
 
-Curl query for 1 person and 2 animals in the image, returning only image url
+Curl will query images with someone in yellow and return only image url.  
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"query": "category = person where count = 1 and supercategory = animal where supercount = 2"}' http://localhost:9000/search/ms_coco_2017 | jq -r '.results.hits.hits[]._source.url'
+curl -X POST -H "Content-Type: application/json" -d '{"query": "category = person where color.css2 = yellow"}' http://localhost:9000/search/ms_coco_2017 | jq -r '.results.hits.hits[]._source.url'
 ```
   
 Don't forget to stop the server after use  
@@ -76,11 +76,11 @@ docker-compose down
 ```
 
 #### Use remote server
-SEL Server is available for test purpose on [simpleelasticlanguage.com:9000](http://simpleelasticlanguage.com:9000) with MS COCO 2017 dataset  
+SEL Server is available for test purpose on [simpleelasticlanguage.com:9000](http://simpleelasticlanguage.com:9000) with MS COCO 2017 dataset enhance with colors  
   
-Curl query for 1 person and 2 animals in the image, returning only image url
+Curl will query one person in steel blue in the image and one animal, returning only image url, images with more people or animals, in steel blue or not, will not match.  
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"query": "category = person where count = 1 and supercategory = animal where supercount = 2"}' http://simpleelasticlanguage.com:9000/search/ms_coco_2017 | jq -r '.results.hits.hits[]._source.url'
+curl -X POST -H "Content-Type: application/json" -d '{"query": "category = person where (count = 1 and color.css3 = steelblue) and supercategory = animal where supercount = 1"}' http://simpleelasticlanguage.com:9000/search/ms_coco_2017 | jq -r '.results.hits.hits[]._source.url'
 ```
 
 

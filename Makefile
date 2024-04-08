@@ -26,7 +26,7 @@ down-tests:
 
 doc:	docker
 	@echo "Getting latest documentation json ..."
-	$(eval DID=$(shell docker run -p 9001:9000 -d sel_server:$(USER)))
+	$(eval DID=$(shell docker run -p 9001:9000 -d $(PROJECT):$(BUILD_TAG))
 	@sleep 2
 	curl "http://localhost:9001/openapi.json" > docs/sel_server.json
 	@docker stop $(DID)
